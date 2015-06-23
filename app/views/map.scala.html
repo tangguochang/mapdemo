@@ -1,0 +1,109 @@
+@(points: List[MapPoint], pointForm: Form[MapPoint])
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import controllers._
+
+@main("Map Demo") {
+    
+    
+
+<div class="container">
+	<div class="row">
+		<div class="span4" style="width:20%;float: left;">
+    	<ul>
+        @for(point <- points) {
+            <li>
+                @point.label
+                
+                @form(routes.MapApplication.deleteMapPoint(point.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>添加新的节点</h2>
+        @form(action=routes.MapApplication.newMapPoint(), 'class -> "form-horizontal") {
+        <div class="control-group" >
+			<label class="control-label" for="title">label</label>
+			<div class="controls">
+				<input type="text" name="label"  id="label" placeholder="label">
+			</div>
+		</div>
+		<div class="control-group" >
+			<label class="control-label" for="title">longitude</label>
+			<div class="controls">
+				<input type="text" name="longitude"  id="longitude" placeholder="longitude">
+			</div>
+		</div>
+		<div class="control-group" >
+			<label class="control-label" for="title">latitude</label>
+			<div class="controls">
+				<input type="text" name="latitude"  id="latitude" placeholder="latitude">
+			</div>
+		</div>
+		<div class="control-group" >
+			<label class="control-label" for="title">info</label>
+			<div class="controls">
+				<input type="text" name="info"  id="info" placeholder="info">
+			</div>
+		</div>
+       
+        <input type="submit" value="Create">
+        
+    }
+		</div>
+		<div class="span8" id="span8"  style="width:80%;float: right;height: 800px;">
+		
+    	</div>
+
+	</div>
+</div>	
+	
+<script type="text/javascript"> 
+
+var map = new BMap.Map("span8");          // 创建地图实例  
+
+
+@for(i <- 0 to points.size()-1){
+	var point_@i = new BMap.Point(@points.get(i).longitude, @points.get(i).latitude);
+	map.centerAndZoom(point_@i, 15); 
+	map.enableScrollWheelZoom();
+	var marker = new BMap.Marker(point_@i);
+	map.addOverlay(marker);  
+	marker.addEventListener("click", function(e){
+	    this.openInfoWindow(new BMap.InfoWindow("@points.get(i).info"));
+	});
+}
+//var point = new BMap.Point(@points.get(0).longitude, @points.get(0).latitude);
+//map.centerAndZoom(point, 15); 
+//map.enableScrollWheelZoom();
+//var marker = new BMap.Marker(point);
+//map.addOverlay(marker);  
+//marker.addEventListener("click", function(e){
+//    this.openInfoWindow(new BMap.InfoWindow("@points.get(0).info"));
+//});
+	
+	
+//var point_2 = new BMap.Point(116.4, 39.9);  // 创建点坐标  
+//map.centerAndZoom(point_2, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+//map.enableScrollWheelZoom();
+//var marker_2 = new BMap.Marker(point_2);        // 创建标注    
+//map.addOverlay(marker_2);                     // 将标注添加到地图中
+//marker_2.openInfoWindow(new BMap.InfoWindow("这里是天安门"));
+//marker_2.addEventListener("click", function(e){
+ //   this.openInfoWindow(new BMap.InfoWindow("这里是天安门"));
+
+//});
+//var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
+//map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+//map.enableScrollWheelZoom();
+//var marker = new BMap.Marker(point);        // 创建标注    
+//map.addOverlay(marker);                     // 将标注添加到地图中
+//marker.openInfoWindow(new BMap.InfoWindow("这里是天安门"));
+
+
+</script>  
+}

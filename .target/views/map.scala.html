@@ -1,0 +1,33 @@
+﻿@(points: List[MapPoint], pointForm: Form[MapPoint])
+
+@import helper._
+
+@main("Map Demo") {
+    
+    <!--<h1>@tasks.size() task(s)</h1>-->
+    
+    <ul>
+        @for(point <- points) {
+            <li>
+                @point.label
+                
+                @form(routes.MapApplication.deletePoint(point.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>添加新节点</h2>
+    
+    @form(routes.MapApplication.newTask()) {
+        
+        @inputText(pointForm("label")) 
+        @inputText(pointForm("longitude"))
+        @inputText(pointForm("latitude"))
+        @inputText(pointForm("info"))
+        <input type="submit" value="Create">
+        
+    }
+    
+}
