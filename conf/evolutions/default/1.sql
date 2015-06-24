@@ -27,13 +27,9 @@ create sequence task_seq;
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists map_point cascade;
 
-drop table if exists map_point;
-
-drop table if exists task;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists task cascade;
 
 drop sequence if exists map_point_seq;
 
