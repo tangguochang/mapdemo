@@ -78,6 +78,14 @@ var map = new BMap.Map("span8");          // 创建地图实例
 	});
 }
 
+
+var polygon = new BMap.Polygon([
+		@for(i <- 0 to points.size()-1){
+		new BMap.Point(@points.get(i).longitude,@points.get(i).latitude),
+		}
+	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5}); 
+
+map.addOverlay(polygon); 	
 	
 	
 //var point_2 = new BMap.Point(116.4, 39.9);  // 创建点坐标  
