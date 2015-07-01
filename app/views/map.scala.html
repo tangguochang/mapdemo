@@ -65,7 +65,11 @@
 <script type="text/javascript"> 
 
 var map = new BMap.Map("span8");          // 创建地图实例  
-
+map.addEventListener("click", function(e){ 
+		$("#longitude").val(e.point.lng);
+		$("#latitude").val(e.point.lat);
+		
+	});	
 
 @for(i <- 0 to points.size()-1){
 	var point_@i = new BMap.Point(@points.get(i).longitude, @points.get(i).latitude);
